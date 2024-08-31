@@ -41,19 +41,35 @@ const projectSchema = new mongoose.Schema({
     resourcesRequired: { type: String, required: true },
     complianceAndResource: { type: String, required: true },
     consent: { type: Boolean, required: true },
+    tasks: [{ description: String, completed: { type: Boolean, default: false } }], // Add tasks array
 });
 
 const Project = mongoose.model('Project', projectSchema, 'projects');
 
+// Add a task to a specific project
+app.post('/api/projects/:projectId/tasks', async (req, res) => {
+    const { projectId } = req.params;
+    const { description } = req.body;
+
+    try {
+        // Find the project by ID and update its tasks
+        const project = await Project.findById(projectId);
+        if (!project) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+
+        // Add the new task to the project
+        project.tasks.push({ description });
+        await project.save();
+
+        res.status(200).json({ message: 'Task added successfully', project });
+    } catch (err) {
+        res.status(500).json({ message: 'Error adding task', error: err.message });
+    }
+});
+
 // Hardcoded JWT secret
 const JWT_SECRET = 'your_hardcoded_jwt_secret';
-
-// // ETHEREUM provier and contract setup
-// const provider = new ethers.providers.InfuraProvider('sepolia', process.env.INFURA_PROJECT_ID);
-// const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
-// const contractAddress = 'YOUR_CONTRACT_ADDRESS'; // Replace with your deployed contract address
-// const contractABI = [ /* Your Contract ABI here */];
-// const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
 // Register route
 app.post('/register', async (req, res) => {
