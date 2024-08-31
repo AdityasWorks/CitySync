@@ -48,12 +48,12 @@ const Project = mongoose.model('Project', projectSchema, 'projects');
 // Hardcoded JWT secret
 const JWT_SECRET = 'your_hardcoded_jwt_secret';
 
-// ETHEREUM provier and contract setup
-const provider = new ethers.providers.InfuraProvider('sepolia', process.env.INFURA_PROJECT_ID);
-const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
-const contractAddress = 'YOUR_CONTRACT_ADDRESS'; // Replace with your deployed contract address
-const contractABI = [ /* Your Contract ABI here */ ];
-const contract = new ethers.Contract(contractAddress, contractABI, signer);
+// // ETHEREUM provier and contract setup
+// const provider = new ethers.providers.InfuraProvider('sepolia', process.env.INFURA_PROJECT_ID);
+// const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+// const contractAddress = 'YOUR_CONTRACT_ADDRESS'; // Replace with your deployed contract address
+// const contractABI = [ /* Your Contract ABI here */];
+// const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
 // Register route
 app.post('/register', async (req, res) => {
@@ -111,53 +111,53 @@ app.post('/login', async (req, res) => {
 });
 
 
-// Add project route with blockchain interaction
-app.post('/api/projects', async (req, res) => {
-    try {
-        const {
-            projectName,
-            projectDescription,
-            areaOfProject,
-            deadline,
-            budgetAllocation,
-            resourcesRequired,
-            complianceAndResource,
-            consent,
-        } = req.body;
+// // Add project route with blockchain interaction
+// app.post('/api/projects', async (req, res) => {
+//     try {
+//         const {
+//             projectName,
+//             projectDescription,
+//             areaOfProject,
+//             deadline,
+//             budgetAllocation,
+//             resourcesRequired,
+//             complianceAndResource,
+//             consent,
+//         } = req.body;
 
-        // Create a new project on the blockchain
-        const tx = await contract.createProject(
-            projectName,
-            projectDescription,
-            areaOfProject,
-            deadline.getTime(),
-            budgetAllocation,
-            resourcesRequired,
-            complianceAndResource,
-            consent
-        );
-        const receipt = await tx.wait();
+//         // Create a new project on the blockchain
+//         const tx = await contract.createProject(
+//             projectName,
+//             projectDescription,
+//             areaOfProject,
+//             deadline.getTime(),
+//             budgetAllocation,
+//             resourcesRequired,
+//             complianceAndResource,
+//             consent
+//         );
+//         const receipt = await tx.wait();
 
-        // Store project details along with the blockchain transaction hash in MongoDB
-        const project = new Project({
-            projectName,
-            projectDescription,
-            areaOfProject,
-            deadline,
-            budgetAllocation,
-            resourcesRequired,
-            complianceAndResource,
-            consent,
-            blockchainTransactionHash: receipt.transactionHash,
-        });
+//         // Store project details along with the blockchain transaction hash in MongoDB
+//         const project = new Project({
+//             projectName,
+//             projectDescription,
+//             areaOfProject,
+//             deadline,
+//             budgetAllocation,
+//             resourcesRequired,
+//             complianceAndResource,
+//             consent,
+//             blockchainTransactionHash: receipt.transactionHash,
+//         });
 
-        await project.save();
+//         await project.save();
 
-        res.status(201).json({ message: 'Project saved successfully', project });
-    } catch (err) {
-        res.status(500).json({ message: 'Error saving project', error: err });
-    }
-});
+//         res.status(201).json({ message: 'Project saved successfully', project });
+//     } catch (err) {
+//         res.status(500).json({ message: 'Error saving project', error: err });
+//     }
+// });
 
 // Add project route
 app.post('/api/projects', async (req, res) => {
