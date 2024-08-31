@@ -21,43 +21,55 @@ const ProjectDetails = () => {
     fetchProjects();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center min-h-screen text-gray-500">
+        Loading...
+      </div>
+    );
+  if (error)
+    return (
+      <div className="flex justify-center items-center min-h-screen text-red-500">
+        {error}
+      </div>
+    );
 
   return (
-    <div className="max-w-4xl mx-auto p-8 bg-white rounded-xl shadow-md">
-      <h1 className="text-3xl font-semibold mb-6 text-center">
+    <div className="w-full p-6 bg-white rounded-lg shadow-lg">
+      <h1 className="text-2xl font-semibold text-center text-gray-800 mb-8">
         Project Details
       </h1>
       {projects.length > 0 ? (
-        <ul className="space-y-4">
+        <ul className="space-y-6">
           {projects.map((project) => (
             <li
               key={project._id}
-              className="p-4 border border-gray-300 rounded-md"
+              className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow"
             >
-              <h2 className="text-xl font-bold mb-2">{project.projectName}</h2>
-              <p>
+              <h2 className="text-xl font-bold text-gray-700 mb-3">
+                {project.projectName}
+              </h2>
+              <p className="text-gray-600 mb-2">
                 <strong>Description:</strong> {project.projectDescription}
               </p>
-              <p>
+              <p className="text-gray-600 mb-2">
                 <strong>Area of Project:</strong> {project.areaOfProject}
               </p>
-              <p>
+              <p className="text-gray-600 mb-2">
                 <strong>Deadline:</strong>{" "}
                 {new Date(project.deadline).toLocaleDateString()}
               </p>
-              <p>
+              <p className="text-gray-600 mb-2">
                 <strong>Budget Allocation:</strong> ${project.budgetAllocation}
               </p>
-              <p>
+              <p className="text-gray-600 mb-2">
                 <strong>Resources Required:</strong> {project.resourcesRequired}
               </p>
-              <p>
+              <p className="text-gray-600 mb-2">
                 <strong>Compliance and Resource:</strong>{" "}
                 {project.complianceAndResource}
               </p>
-              <p>
+              <p className="text-gray-600">
                 <strong>Consent:</strong>{" "}
                 {project.consent ? "Given" : "Not Given"}
               </p>
@@ -65,7 +77,7 @@ const ProjectDetails = () => {
           ))}
         </ul>
       ) : (
-        <p>No projects found.</p>
+        <p className="text-center text-gray-500">No projects found.</p>
       )}
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ProjectForm = () => {
   const [formData, setFormData] = useState({
@@ -10,8 +11,10 @@ const ProjectForm = () => {
     budgetAllocation: "",
     resourcesRequired: "",
     complianceAndResource: "",
-    consent: false, // Add this field to match your backend schema
+    consent: false,
   });
+
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -29,6 +32,7 @@ const ProjectForm = () => {
         formData
       );
       console.log("Project saved:", response.data);
+      navigate("/discussionForum");
     } catch (error) {
       console.error("Error saving project:", error);
     }
@@ -40,6 +44,7 @@ const ProjectForm = () => {
         Submit Project
       </h1>
       <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Form fields */}
         <div className="flex space-x-4">
           <div className="w-1/2">
             <label
