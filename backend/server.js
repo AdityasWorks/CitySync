@@ -193,6 +193,16 @@ app.post('/api/projects', async (req, res) => {
     }
 });
 
+// Fetch all projects route
+app.get('/api/projects', async (req, res) => {
+    try {
+        const projects = await Project.find(); // Retrieve all projects from the database
+        res.status(200).json(projects);
+    } catch (err) {
+        res.status(500).json({ message: 'Error fetching projects', error: err });
+    }
+});
+
 const PORT = 5000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
