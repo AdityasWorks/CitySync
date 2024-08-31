@@ -41,30 +41,32 @@ const projectSchema = new mongoose.Schema({
     resourcesRequired: { type: String, required: true },
     complianceAndResource: { type: String, required: true },
     consent: { type: Boolean, required: true },
-    tasks: [{ description: String, completed: { type: Boolean, default: false } }], // Add tasks array
+    taskList: [{ description: String, completed: { type: Boolean, default: false } }],
 });
 
 const Project = mongoose.model('Project', projectSchema, 'projects');
 
-// Add a task to a specific project
-app.post('/api/projects/:projectId/tasks', async (req, res) => {
+// Add a new task to a project
+app.post("/api/projects/:projectId/tasks", async (req, res) => {
     const { projectId } = req.params;
     const { description } = req.body;
 
     try {
-        // Find the project by ID and update its tasks
-        const project = await Project.findById(projectId);
+        // Find the project by ID and update the taskList array
+        const project = await Project.findByIdAndUpdate(
+            projectId,
+            { $push: { taskList: { description } } },
+            { new: true } // Return the updated project
+        );
+
         if (!project) {
-            return res.status(404).json({ message: 'Project not found' });
+            return res.status(404).json({ message: "Project not found" });
         }
 
-        // Add the new task to the project
-        project.tasks.push({ description });
-        await project.save();
-
-        res.status(200).json({ message: 'Task added successfully', project });
-    } catch (err) {
-        res.status(500).json({ message: 'Error adding task', error: err.message });
+        res.status(200).json(project);
+    } catch (error) {
+        console.error("Error adding task:", error);
+        res.status(500).json({ message: "Internal server error" });
     }
 });
 
@@ -125,55 +127,6 @@ app.post('/login', async (req, res) => {
         res.status(500).json({ message: 'Error logging in', error: err });
     }
 });
-
-
-// // Add project route with blockchain interaction
-// app.post('/api/projects', async (req, res) => {
-//     try {
-//         const {
-//             projectName,
-//             projectDescription,
-//             areaOfProject,
-//             deadline,
-//             budgetAllocation,
-//             resourcesRequired,
-//             complianceAndResource,
-//             consent,
-//         } = req.body;
-
-//         // Create a new project on the blockchain
-//         const tx = await contract.createProject(
-//             projectName,
-//             projectDescription,
-//             areaOfProject,
-//             deadline.getTime(),
-//             budgetAllocation,
-//             resourcesRequired,
-//             complianceAndResource,
-//             consent
-//         );
-//         const receipt = await tx.wait();
-
-//         // Store project details along with the blockchain transaction hash in MongoDB
-//         const project = new Project({
-//             projectName,
-//             projectDescription,
-//             areaOfProject,
-//             deadline,
-//             budgetAllocation,
-//             resourcesRequired,
-//             complianceAndResource,
-//             consent,
-//             blockchainTransactionHash: receipt.transactionHash,
-//         });
-
-//         await project.save();
-
-//         res.status(201).json({ message: 'Project saved successfully', project });
-//     } catch (err) {
-//         res.status(500).json({ message: 'Error saving project', error: err });
-//     }
-// });
 
 // Add project route
 app.post('/api/projects', async (req, res) => {
