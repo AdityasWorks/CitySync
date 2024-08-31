@@ -8,7 +8,7 @@ function Navbar() {
       <div className="text-2xl font-bold text-black">SIH2024</div>
       <nav className="flex-1 flex justify-center items-center space-x-10">
         <Link
-          to="/home_web"
+          to="/home"
           className="text-lg font-medium text-black relative hover:before:w-full before:w-0 before:h-0.5 before:bg-black before:absolute before:top-full before:left-0 before:transition-all before:duration-300"
         >
           Home

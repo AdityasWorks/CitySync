@@ -1,33 +1,44 @@
 import React, { useState } from "react";
 
-const projects = [
-  { id: 1, title: "Project 1", subtitle: "Road Construction" },
-  { id: 2, title: "Project 2", subtitle: "Pipe Line Instruction" },
-  { id: 3, title: "Project 3", subtitle: "Sewage Canal" },
-];
-
 const ProjectNavigator = () => {
-  const [expanded, setExpanded] = useState(null);
+  const [openProject, setOpenProject] = useState(null);
 
-  const toggleExpand = (id) => {
-    setExpanded(expanded === id ? null : id);
+  const handleToggle = (projectId) => {
+    setOpenProject(openProject === projectId ? null : projectId);
   };
 
+  const projects = [
+    { id: 1, name: "Water Pipeline" },
+    { id: 2, name: "Electricity Line" },
+    { id: 3, name: "Gas Pipeline" },
+  ];
+
   return (
-    <div className="bg-gray-100 rounded-lg p-4 w-full">
+    <div>
       {projects.map((project) => (
-        <div
-          key={project.id}
-          className={`flex items-center p-3 mb-2 rounded-lg cursor-pointer ${
-            expanded === project.id ? "bg-blue-100" : "bg-white"
-          }`}
-          onClick={() => toggleExpand(project.id)}
-        >
-          <div className="w-6 h-6 bg-purple-600 rounded-full mr-4"></div>
-          <div className="flex flex-col">
-            <div className="font-bold text-lg">{project.title}</div>
-            <div className="text-sm text-gray-500">{project.subtitle}</div>
+        <div key={project.id} className="mb-4">
+          <div
+            className="cursor-pointer bg-gray-200 p-4 rounded-lg"
+            onClick={() => handleToggle(project.id)}
+          >
+            {project.name}
           </div>
+          {openProject === project.id && (
+            <div className="mt-2 bg-gray-100 p-4 rounded-lg">
+              <button
+                className="bg-blue-600 text-white py-2 px-4 rounded-lg mr-4"
+                onClick={() => navigate("/addTasks")}
+              >
+                Add Task
+              </button>
+              <button
+                className="bg-green-600 text-white py-2 px-4 rounded-lg"
+                onClick={() => navigate("/projectProgress")}
+              >
+                View Progress
+              </button>
+            </div>
+          )}
         </div>
       ))}
     </div>
