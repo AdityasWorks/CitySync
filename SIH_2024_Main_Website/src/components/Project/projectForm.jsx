@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -12,9 +12,25 @@ const ProjectForm = () => {
     resourcesRequired: "",
     complianceAndResource: "",
     consent: false,
+    selectedProject: "", // Add this field
   });
 
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const [projects, setProjects] = useState([]); // Add this state
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch projects when the component mounts
+    const fetchProjects = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/projects");
+        setProjects(response.data); // Set fetched projects to state
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -183,7 +199,6 @@ const ProjectForm = () => {
             required
           />
         </div>
-
         <button
           type="submit"
           className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"

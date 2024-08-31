@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import ProjectNavigator from "../components/Project/ProjectNavigator";
@@ -6,28 +6,25 @@ import Image from "../assets/image.png";
 
 function Home() {
   const navigate = useNavigate();
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
-  const handleProjectClick = (projectId) => {
-    setSelectedProject(projectId);
-    setIsDropdownVisible(!isDropdownVisible);
+  const handleAddTasks = () => {
+    navigate("/addTasks");
+  };
+
+  const handleViewAllTasks = () => {
+    navigate("/allTasks"); // Adjust the route to where you display all tasks
   };
 
   const handleNavigationProjectDetails = () => {
     navigate("/projectDetails");
   };
 
+  const handleProgress = () => {
+    navigate("/ProjectProgress");
+  };
+
   const handleNavigationCreateProject = () => {
     navigate("/createProject");
-  };
-
-  const handleAddTasks = () => {
-    navigate("/addTasks"); // Navigate to the Add Tasks page
-  };
-
-  const handleViewMore = () => {
-    navigate("/projectProgress");
   };
 
   const progressPercentage = 70; // Example progress percentage
@@ -45,11 +42,8 @@ function Home() {
               <h2 className="text-xl font-semibold text-gray-800 mb-4">
                 Project Navigator
               </h2>
-              <ProjectNavigator onProjectClick={handleProjectClick} />
-            </div>
-
-            {isDropdownVisible && selectedProject && (
-              <div className="mt-4 p-4 bg-gray-200 rounded-lg shadow-md">
+              <ProjectNavigator />
+              <div className="mt-4 space-y-4">
                 <button
                   onClick={handleAddTasks}
                   className="bg-blue-600 text-white py-2 px-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out"
@@ -57,13 +51,13 @@ function Home() {
                   Add Tasks
                 </button>
                 <button
-                  onClick={handleViewMore}
-                  className="ml-4 bg-green-600 text-white py-2 px-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out"
+                  onClick={handleViewAllTasks}
+                  className="bg-gray-600 text-white py-2 ml-6 px-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out"
                 >
-                  View Progress
+                  View All Tasks
                 </button>
               </div>
-            )}
+            </div>
           </div>
 
           <div className="relative flex-1 rounded-lg shadow-md">
@@ -106,7 +100,7 @@ function Home() {
               {progressPercentage}% Complete
             </span>
             <button
-              onClick={handleViewMore}
+              onClick={handleProgress}
               className="bg-indigo-600 text-white py-2 px-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out"
             >
               View More

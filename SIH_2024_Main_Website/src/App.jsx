@@ -9,6 +9,7 @@ import ProjectDetails from "./pages/projectDetails";
 import DiscussionForum from "./pages/discussionForum";
 import ProjectProgress from "./components/Project/projectProgress";
 import Tasks from "./components/tasks/addTasks";
+import AllTasks from "./components/tasks/allTasks";
 
 import { AuthProvider } from "../src/components/context/authContext/page";
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/discussionForum" element={<DiscussionForum />} />
             <Route path="/projectProgress" element={<ProjectProgress />} />
             <Route path="/addTasks" element={<Tasks />} />
+            <Route path="/allTasks" element={<AllTasks />} />
           </Routes>
         </div>
       </Router>
