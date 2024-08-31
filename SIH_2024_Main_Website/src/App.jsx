@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./components/auth/login/index";
 import Register from "./components/auth/register/index";
 import Home from "./pages/home";
+import ProjectDetails from "./pages/projectDetails";
 
 import { AuthProvider } from "../src/components/context/authContext/page";
 
@@ -17,6 +18,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/home" element={<Home />} />
             <Route path="/" element={<Login />} />
+            <Route path="/projectDetails" element={<ProjectDetails />} />
           </Routes>
         </div>
       </Router>

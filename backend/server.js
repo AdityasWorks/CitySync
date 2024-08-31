@@ -30,6 +30,23 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema, 'user_data');
 
+// Project Schema
+const projectSchema = new mongoose.Schema({
+    projectName: { type: String, required: true },
+    projectDescription: { type: String, required: true },
+    areaOfProject: { type: String, required: true },
+    deadline: { type: Date, required: true },
+    budgetAllocation: { type: Number, required: true },
+    resourcesRequired: { type: String, required: true },
+    complianceAndResource: { type: String, required: true },
+    consent: { type: Boolean, required: true },
+});
+
+const Project = mongoose.model('Project', projectSchema, 'projects');
+
+// Hardcoded JWT secret
+const JWT_SECRET = 'your_hardcoded_jwt_secret';
+
 // Register route
 app.post('/register', async (req, res) => {
     try {
@@ -77,11 +94,45 @@ app.post('/login', async (req, res) => {
         }
 
         // Create a JWT token
-        const token = jwt.sign({ id: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
+        const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
 
         res.json({ token });
     } catch (err) {
         res.status(500).json({ message: 'Error logging in', error: err });
+    }
+});
+
+// Add project route
+app.post('/api/projects', async (req, res) => {
+    try {
+        const {
+            projectName,
+            projectDescription,
+            areaOfProject,
+            deadline,
+            budgetAllocation,
+            resourcesRequired,
+            complianceAndResource,
+            consent,
+        } = req.body;
+
+        // Create a new project
+        const project = new Project({
+            projectName,
+            projectDescription,
+            areaOfProject,
+            deadline,
+            budgetAllocation,
+            resourcesRequired,
+            complianceAndResource,
+            consent,
+        });
+
+        await project.save();
+
+        res.status(201).json({ message: 'Project saved successfully', project });
+    } catch (err) {
+        res.status(500).json({ message: 'Error saving project', error: err });
     }
 });
 
