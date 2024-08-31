@@ -6,8 +6,12 @@ import ProjectNavigator from "../components/Project/projectNavigator";
 function Home() {
   const navigate = useNavigate(); // Initialize useNavigate
 
-  const handleNavigation = () => {
+  const handleNavigationProjectDetails = () => {
     navigate("/projectDetails"); // Programmatic navigation
+  };
+
+  const handleNavigationCreateProject = () => {
+    navigate("/createProject"); // Programmatic navigation
   };
 
   return (
@@ -18,10 +22,16 @@ function Home() {
 
       <section className="flex justify-center items-center p-4">
         <button
-          onClick={handleNavigation}
+          onClick={handleNavigationCreateProject}
           className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
         >
-          Go to Target Page
+          Create Project
+        </button>
+        <button
+          onClick={handleNavigationProjectDetails}
+          className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+        >
+          See Projects
         </button>
       </section>
 
