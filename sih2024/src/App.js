@@ -9,7 +9,7 @@ import Home from "./pages/home";
 import { AuthProvider } from "../src/components/context/authContext/page";
 import { useRoutes } from "react-router-dom";
 
-import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader';
+import RingLoader from 'react-spinners/PuffLoader';
 
 
 function App() {
@@ -54,8 +54,8 @@ function App() {
         width: '100%',
         height: '100vh'
       }}>
-        <ClimbingBoxLoader
-          size={30}
+        <RingLoader
+          size={100}
           color={'#000000'}
           loading={loading}
           className="loading-spinner"

@@ -1,34 +1,23 @@
-import React, { useEffect } from 'react'; // Import useState and useEffect from React
-import { auth } from '../components/firebase/firebase'; // Ensure this import path is correct
-import { doSignOut } from '../components/firebase/auth'; // Ensure this import path is correct
+import React from 'react';
+import Navbar from '../components/Navbar/Navbar';
+import ProjectNavigator from '../components/Project/projectNavigator';
 
 function Home() {
-
-    useEffect(() => {
-        // Check if user is already signed in
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-            } else {
-                console.log('No user logged in');
-            }
-        });
-
-        return () => {
-            unsubscribe(); // Cleanup function to unsubscribe from the auth state listener
-        };
-    }, []);
-
     return (
-        <header className="header">
-            <div className="logo">Eventral</div>
-            <nav className="navbar">
-                <div className='nav-btn'>
-                    <button className='btn-new' onClick={doSignOut}>
-                        Logout
-                    </button>
+        <div>
+            <header>
+                <Navbar />
+            </header>
+
+            <section className="flex justify-between m-32">
+                <div className="flex-1 bg-[#fbfafa]  p-4 mr-4">
+                    <ProjectNavigator />
                 </div>
-            </nav>
-        </header>
+                <div className="flex-1 bg-[#fbfafa] border border-black p-4 ml-4">
+                    Area 2
+                </div>
+            </section>
+        </div>
     );
 }
 
