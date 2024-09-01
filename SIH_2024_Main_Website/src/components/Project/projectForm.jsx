@@ -12,18 +12,17 @@ const ProjectForm = () => {
     resourcesRequired: "",
     complianceAndResource: "",
     consent: false,
-    selectedProject: "", // Add this field
+    selectedProject: "",
   });
 
-  const [projects, setProjects] = useState([]); // Add this state
+  const [projects, setProjects] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch projects when the component mounts
     const fetchProjects = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/projects");
-        setProjects(response.data); // Set fetched projects to state
+        setProjects(response.data);
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
@@ -55,150 +54,103 @@ const ProjectForm = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-8 bg-white rounded-xl shadow-md">
+    <div className="max-w-2xl mx-auto p-8 bg-white rounded-xl shadow-md">
       <h1 className="text-2xl font-semibold mb-6 text-center">
         Submit Project
       </h1>
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Form fields */}
-        <div className="flex space-x-4">
-          <div className="w-1/2">
-            <label
-              htmlFor="projectName"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Project Name *
-            </label>
-            <input
-              type="text"
-              id="projectName"
-              name="projectName"
-              value={formData.projectName}
-              onChange={handleChange}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-              required
-            />
-          </div>
-          <div className="w-1/2">
-            <label
-              htmlFor="areaOfProject"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Area of Project *
-            </label>
-            <input
-              type="text"
-              id="areaOfProject"
-              name="areaOfProject"
-              value={formData.areaOfProject}
-              onChange={handleChange}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-              required
-            />
-          </div>
-        </div>
-        <div>
-          <label
-            htmlFor="projectDescription"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Project Description *
-          </label>
-          <textarea
-            id="projectDescription"
-            name="projectDescription"
-            value={formData.projectDescription}
-            onChange={handleChange}
-            rows="4"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-            required
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="deadline"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Deadline *
-          </label>
+        <div className="grid grid-cols-2 gap-4">
           <input
-            type="date"
-            id="deadline"
-            name="deadline"
-            value={formData.deadline}
+            type="text"
+            id="projectName"
+            name="projectName"
+            value={formData.projectName}
             onChange={handleChange}
+            placeholder="Your name*"
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
             required
           />
-        </div>
-        <div>
-          <label
-            htmlFor="budgetAllocation"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Budget Allocation *
-          </label>
+
           <input
             type="number"
             id="budgetAllocation"
             name="budgetAllocation"
             value={formData.budgetAllocation}
             onChange={handleChange}
+            placeholder="Budget*"
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
             required
           />
-        </div>
-        <div>
-          <label
-            htmlFor="resourcesRequired"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Resources Required *
-          </label>
-          <textarea
-            id="resourcesRequired"
-            name="resourcesRequired"
-            value={formData.resourcesRequired}
+          <input
+            type="text"
+            id="areaOfProject"
+            name="areaOfProject"
+            value={formData.areaOfProject}
             onChange={handleChange}
-            rows="3"
+            placeholder="Area of Project*"
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
             required
           />
-        </div>
-        <div>
-          <label
-            htmlFor="complianceAndResource"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Compliance and Resource *
-          </label>
-          <textarea
-            id="complianceAndResource"
-            name="complianceAndResource"
-            value={formData.complianceAndResource}
+          <input
+            type="date"
+            id="deadline"
+            name="deadline"
+            value={formData.deadline}
             onChange={handleChange}
-            rows="3"
+            placeholder="Deadline*"
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
             required
           />
         </div>
-        <div>
-          <label
-            htmlFor="consent"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Consent *
-          </label>
+
+        <textarea
+          id="projectDescription"
+          name="projectDescription"
+          value={formData.projectDescription}
+          onChange={handleChange}
+          placeholder="Project Description*"
+          rows="3"
+          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+          required
+        />
+
+        <textarea
+          id="resourcesRequired"
+          name="resourcesRequired"
+          value={formData.resourcesRequired}
+          onChange={handleChange}
+          placeholder="Resources Required*"
+          rows="2"
+          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+          required
+        />
+
+        <textarea
+          id="complianceAndResource"
+          name="complianceAndResource"
+          value={formData.complianceAndResource}
+          onChange={handleChange}
+          placeholder="Compliance and Resource*"
+          rows="2"
+          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+          required
+        />
+
+        <div className="flex items-center">
           <input
             type="checkbox"
             id="consent"
             name="consent"
             checked={formData.consent}
             onChange={handleChange}
-            className="mt-1"
+            className="h-4 w-4 text-green-600 border-gray-300 rounded"
             required
           />
+          <label htmlFor="consent" className="ml-2 block text-sm text-gray-900">
+            I give my consent*
+          </label>
         </div>
+
         <button
           type="submit"
           className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"

@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import ProjectNavigator from "../components/Project/ProjectNavigator";
-import Image from "../assets/image.png";
 
 function Home() {
   const navigate = useNavigate();
@@ -60,28 +59,19 @@ function Home() {
             </div>
           </div>
 
-          <div className="relative flex-1 rounded-lg shadow-md">
-            <div className="relative h-[50vh] overflow-hidden rounded-lg">
-              <img
-                src={Image}
-                alt="Descriptive alt text"
-                className="object-cover w-full h-full border-2 border-gray-200 shadow-lg"
-              />
-              <div className="absolute inset-0 flex flex-col items-center justify-center space-y-4">
-                <button
-                  onClick={handleNavigationCreateProject}
-                  className="bg-blue-600 text-white py-3 px-8 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
-                >
-                  Create Project
-                </button>
-                <button
-                  onClick={handleNavigationProjectDetails}
-                  className="bg-green-600 text-white py-3 px-8 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
-                >
-                  See Projects
-                </button>
-              </div>
-            </div>
+          <div className="flex-1 bg-white p-6 rounded-lg shadow-md flex flex-col justify-center items-center space-y-4">
+            <button
+              onClick={handleNavigationCreateProject}
+              className="bg-blue-600 text-white py-3 px-8 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out w-full md:w-1/2 text-center"
+            >
+              Create Project
+            </button>
+            <button
+              onClick={handleNavigationProjectDetails}
+              className="bg-green-600 text-white py-3 px-8 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out w-full md:w-1/2 text-center"
+            >
+              See Projects
+            </button>
           </div>
         </section>
 
