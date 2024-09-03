@@ -66,7 +66,7 @@ const ProjectForm = () => {
             name="projectName"
             value={formData.projectName}
             onChange={handleChange}
-            placeholder="Your name*"
+            placeholder="project name*"
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
             required
           />

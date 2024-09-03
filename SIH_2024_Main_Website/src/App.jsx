@@ -10,6 +10,7 @@ import DiscussionForum from "./pages/discussionForum";
 import ProjectProgress from "./components/Project/projectProgress";
 import Tasks from "./components/tasks/addTasks";
 import AllTasks from "./components/tasks/allTasks";
+import MapMain from "./pages/map";
 
 import { AuthProvider } from "../src/components/context/authContext/page";
 
@@ -29,6 +30,7 @@ function App() {
             <Route path="/projectProgress" element={<ProjectProgress />} />
             <Route path="/addTasks" element={<Tasks />} />
             <Route path="/allTasks" element={<AllTasks />} />
+            <Route path="/mapMain" element={<MapMain />} />
           </Routes>
         </div>
       </Router>

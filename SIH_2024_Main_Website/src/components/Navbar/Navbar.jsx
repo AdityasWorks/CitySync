@@ -20,7 +20,7 @@ function Navbar() {
           Dashboard
         </Link>
         <Link
-          to="/event"
+          to="/mapMain"
           className="text-lg font-medium text-black relative hover:before:w-full before:w-0 before:h-0.5 before:bg-black before:absolute before:top-full before:left-0 before:transition-all before:duration-300"
         >
           Projects
