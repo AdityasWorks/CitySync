@@ -42,6 +42,7 @@ const projectSchema = new mongoose.Schema({
     complianceAndResource: { type: String, required: true },
     consent: { type: Boolean, required: true },
     taskList: [{ description: String, completed: { type: Boolean, default: false } }],
+    ipfshash: { type: String, required: true }
 });
 
 const Project = mongoose.model('Project', projectSchema, 'projects');
@@ -140,7 +141,13 @@ app.post('/api/projects', async (req, res) => {
             resourcesRequired,
             complianceAndResource,
             consent,
+            ipfshash
         } = req.body;
+
+        // Check if all required fields are provided
+        if (!projectName || !projectDescription || !areaOfProject || !deadline || !budgetAllocation || !resourcesRequired || !complianceAndResource || consent === undefined || !ipfshash) {
+            return res.status(400).json({ message: 'All fields are required' });
+        }
 
         // Create a new project
         const project = new Project({
@@ -152,12 +159,14 @@ app.post('/api/projects', async (req, res) => {
             resourcesRequired,
             complianceAndResource,
             consent,
+            ipfshash
         });
 
         await project.save();
 
         res.status(201).json({ message: 'Project saved successfully', project });
     } catch (err) {
+        console.error('Error saving project:', err);
         res.status(500).json({ message: 'Error saving project', error: err });
     }
 });

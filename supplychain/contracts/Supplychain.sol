@@ -16,7 +16,7 @@ contract SupplyChain {
         string projectName;
         string projectDescription;
         string areaOfProject;
-        uint256 deadline;
+        uint256 deadline; 
         uint256 budgetAllocation;
         string resourcesRequired;
         string complianceAndResource;
@@ -42,7 +42,7 @@ contract SupplyChain {
         string projectName,
         string projectDescription,
         string areaOfProject,
-        uint256 deadline,
+        uint256 deadline, 
         uint256 budgetAllocation,
         string resourcesRequired,
         string complianceAndResource,
@@ -71,7 +71,7 @@ contract SupplyChain {
         string memory _projectName,
         string memory _projectDescription,
         string memory _areaOfProject,
-        uint256 _deadline,
+        uint256 _deadline, 
         uint256 _budgetAllocation,
         string memory _resourcesRequired,
         string memory _complianceAndResource,
@@ -83,7 +83,7 @@ contract SupplyChain {
             _projectName,
             _projectDescription,
             _areaOfProject,
-            _deadline,
+            _deadline, 
             _budgetAllocation,
             _resourcesRequired,
             _complianceAndResource,
@@ -95,7 +95,7 @@ contract SupplyChain {
             _projectName,
             _projectDescription,
             _areaOfProject,
-            _deadline,
+            _deadline, 
             _budgetAllocation,
             _resourcesRequired,
             _complianceAndResource,
@@ -125,7 +125,7 @@ contract SupplyChain {
         string memory,
         string memory,
         string memory,
-        uint256,
+        uint256, 
         uint256,
         string memory,
         string memory,
@@ -137,7 +137,7 @@ contract SupplyChain {
             project.projectName,
             project.projectDescription,
             project.areaOfProject,
-            project.deadline,
+            project.deadline, 
             project.budgetAllocation,
             project.resourcesRequired,
             project.complianceAndResource,

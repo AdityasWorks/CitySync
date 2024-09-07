@@ -10,10 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ethersproject/providers": "^5.7.2",
     "@react-google-maps/api": "^2.19.3",
     "axios": "^1.7.6",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.2",
     "firebase": "^10.13.1",
     "maplibre-gl": "^4.6.0",
+    "pinata": "^1.0.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-map-gl": "^7.1.7",

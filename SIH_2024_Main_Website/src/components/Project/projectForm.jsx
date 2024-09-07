@@ -1,6 +1,19 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ethers, JsonRpcProvider, Wallet } from "ethers";
+import { Web3Provider } from '@ethersproject/providers';
+import ABI from "Y:/SIH_AKSHIT_BRANCH/sih2024/supplychain/artifacts/contracts/Supplychain.sol/SupplyChain.json";
+
+//need to find a better way to import ABI above
+
+//set up for interacting with the blockchain
+const JWT = import.meta.env.VITE_PINATA_JWT;
+const contractABI = ABI.abi;
+const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
+const provider = new Web3Provider(window.ethereum, 'any');
+const signer = provider.getSigner();
+const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
 const ProjectForm = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +25,7 @@ const ProjectForm = () => {
     resourcesRequired: "",
     complianceAndResource: "",
     consent: false,
-    selectedProject: "",
+    ipfshash: ""
   });
 
   const [projects, setProjects] = useState([]);
@@ -42,12 +55,69 @@ const ProjectForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/projects",
-        formData
+      // connecting w wallet (metamask)
+      const signer = provider.getSigner();
+      const connectedContract = contract.connect(signer);
+      // smart contract me deadline ko integer liya so converting it 
+      const deadline = new Date(formData.deadline).getTime() / 1000;
+      
+      // Adding project to blockchain
+      const tx = await connectedContract.addProject(
+        formData.projectName,
+        formData.projectDescription,
+        formData.areaOfProject,
+        deadline,
+        formData.budgetAllocation,
+        formData.resourcesRequired,
+        formData.complianceAndResource,
+        formData.consent
       );
-      console.log("Project saved:", response.data);
-      navigate("/discussionForum");
+
+      // converting project data to json and pinning it to IPFS
+      const jsonData = JSON.stringify(formData);
+      
+      const formDataIPFS = new FormData();
+      formDataIPFS.append('file', new Blob([jsonData], { type: 'application/json' }));
+      formDataIPFS.append('pinataMetadata', JSON.stringify({ name: formData.projectName }));
+      formDataIPFS.append('pinataOptions', JSON.stringify({ cidVersion: 0 }));
+
+      const response = await fetch('https://api.pinata.cloud/pinning/pinFileToIPFS', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${JWT}`,
+        },
+        body: formDataIPFS,
+      });
+
+      // making sure the response is in json format
+      const data = await response.json();
+      console.log(data);
+      const ipfsHash = data.IpfsHash;
+
+      // Ensure formData includes the IPFS hash
+      const formDataWithIPFS = {
+        ...formData,
+        ipfshash: ipfsHash,
+      };
+
+      // Send data to MongoDB
+      const res = await fetch('http://localhost:5000/api/projects', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataWithIPFS),
+      });
+
+      const mongodata = await res.json();
+      console.log(mongodata);
+      
+      // Navigate to discussion forum
+      try {
+        navigate("/discussionForum");
+      } catch (error) {
+        console.error('Error navigating to discussion forum:', error);
+      }
     } catch (error) {
       console.error("Error saving project:", error);
     }
