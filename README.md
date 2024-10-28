@@ -34,15 +34,15 @@ The platform is designed to streamline city governance by improving communicatio
    ```bash
    cd CitySync
    ```
-3. Install dependencies:
+3. Install dependencies in Frontend and Backend:
    ```bash
    npm install
    ```
-4. Run the development server with Vite:
+4. Run the development server with Vite in Frontend folder:
    ```bash
    npm run dev
    ```
 5. Set up the database and blockchain network (refer to `config/setup.md` for detailed instructions).
-6. Open the application at `http://localhost:3000`.
+6. Open the application at `http://localhost:5173`.
 
 This platform aims to foster collaboration, reduce redundancy, and enhance the effectiveness of city governance efforts. We welcome contributions to improve and expand its capabilities!
