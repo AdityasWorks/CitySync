@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ethers, JsonRpcProvider, Wallet } from "ethers";
 import { Web3Provider } from '@ethersproject/providers';
-// import ABI from "Y:/SIH_AKSHIT_BRANCH/sih2024/supplychain/artifacts/contracts/Supplychain.sol/SupplyChain.json";
 import ABI from '../../../../supplychain/artifacts/contracts/Supplychain.sol/SupplyChain.json';
 
 //need to find a better way to import ABI above

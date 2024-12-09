@@ -5,7 +5,7 @@ import { doSignOut } from "../firebase/auth";
 function Navbar() {
   return (
     <header className="flex justify-between items-center w-full py-2 px-20">
-      <div className="text-2xl font-bold text-black">SIH2024</div>
+      <div className="text-2xl font-bold text-black">CitySync</div>
       <nav className="flex-1 flex justify-center items-center space-x-10">
         <Link
           to="/home"

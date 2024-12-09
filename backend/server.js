@@ -71,9 +71,6 @@ app.post("/api/projects/:projectId/tasks", async (req, res) => {
     }
 });
 
-// Hardcoded JWT secret
-const JWT_SECRET = 'your_hardcoded_jwt_secret';
-
 // Register route
 app.post('/register', async (req, res) => {
     try {
