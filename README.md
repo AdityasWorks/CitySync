@@ -28,7 +28,7 @@ The platform is designed to streamline city governance by improving communicatio
 ## Setup Instructions
 1. Clone the repository:
    ```bash
-   git clone https://github.com/AdityasWork/digital-city-governance-platform.git
+   git clone https://github.com/AdityasWorks/CitySync.git
    ```
 2. Navigate to the project directory:
    ```bash
